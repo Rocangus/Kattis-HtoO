@@ -65,16 +65,20 @@ namespace Kattis_HtoO
             }
         }
 
-        public static void MultiplySourceMolecule(Dictionary<char, int> sourceAtoms, string[] inputStrings)
+        public static Dictionary<char, int> MultiplySourceMolecule(Dictionary<char, int> sourceAtoms, string[] inputStrings)
         {
             if (inputStrings.Length == 2)
             {
                 var countMultiplier = int.Parse(inputStrings[1]);
-                foreach (var key in sourceAtoms.Keys)
+                var keys = new char[sourceAtoms.Keys.Count];
+                sourceAtoms.Keys.CopyTo(keys, 0);
+                for(var i = 0; i < keys.Length; i++)
                 {
+                    var key = keys[i];
                     sourceAtoms[key] *= countMultiplier;
                 }
             }
+            return sourceAtoms;
         }
     }
 }
