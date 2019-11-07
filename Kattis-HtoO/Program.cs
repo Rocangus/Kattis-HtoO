@@ -13,38 +13,37 @@ namespace Kattis_HtoO
             string input = Console.ReadLine();
             inputIsSource = true;
             var inputStrings = input.Split();
-            sourceAtoms = ParseInput(sourceAtoms, inputStrings);
+            sourceAtoms = ParseInput(sourceAtoms, inputStrings, inputIsSource);
             string outputMolecule = Console.ReadLine();
         }
 
-        public static Dictionary<char, int> ParseInput(Dictionary<char, int> atoms, string[] inputStringArray)
+        public static Dictionary<char, int> ParseInput(Dictionary<char, int> atoms, string[] inputStringArray, bool inputIsSource)
         {
-            var inputSource = inputStringArray[0];
-            for (int i = 0; i < inputSource.Length; i++)
+            var input = inputStringArray[0];
+            for (int i = 0; i < input.Length; i++)
             {
-                var c = inputSource[i];
+                var c = input[i];
                 if (!char.IsDigit(c))
                 {
-                    List<int> ints = new List<int>();
-                    int value = DetermineAtomCount(inputSource, ref i, ints);
-                    UpdateAtomCounts(atoms, c, value);
+                    int value = DetermineAtomCount(input, ref i);
+                    atoms = UpdateAtomCounts(atoms, c, value);
                 }
             }
             if (inputIsSource)
             {
                 MultiplySourceMolecule(atoms, inputStringArray);
-                inputIsSource = false;
             }
             return atoms;
         }
 
-        public static int DetermineAtomCount(string inputSource, ref int i, List<int> ints)
+        public static int DetermineAtomCount(string input, ref int i)
         {
+            List<int> ints = new List<int>();
             int x = i + 1;
             int value;
-            while (x < inputSource.Length && char.IsDigit(inputSource[x]))
+            while (x < input.Length && char.IsDigit(input[x]))
             {
-                ints.Add((int)char.GetNumericValue(inputSource[x]));
+                ints.Add((int)char.GetNumericValue(input[x]));
                 x++;
             }
             if (ints.Count > 0)
