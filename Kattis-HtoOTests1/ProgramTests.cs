@@ -22,5 +22,21 @@ namespace Kattis_HtoO.Tests
             // Assert
             CollectionAssert.AreEquivalent(actual, expected);
         }
+
+        [TestMethod()]
+        public void UpdateAtomCountsTest()
+        {
+            // Arrange
+            var actual = new Dictionary<char, int>();
+            var expected = new Dictionary<char, int>() { { 'C', 1 }, { 'H', 3 }, { 'O', 1 } };
+
+            // Act
+            actual = Program.UpdateAtomCounts(actual, 'C', 1);
+            actual = Program.UpdateAtomCounts(actual, 'H', 3);
+            actual = Program.UpdateAtomCounts(actual, 'O', 1);
+
+            // Assert
+            CollectionAssert.AreEquivalent(actual, expected);
+        }
     }
 }

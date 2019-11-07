@@ -30,7 +30,11 @@ namespace Kattis_HtoO
                     UpdateAtomCounts(atoms, c, value);
                 }
             }
-            if (inputIsSource) MultiplySourceMolecule(atoms, inputStringArray);
+            if (inputIsSource)
+            {
+                MultiplySourceMolecule(atoms, inputStringArray);
+                inputIsSource = false;
+            }
             return atoms;
         }
 
@@ -53,32 +57,33 @@ namespace Kattis_HtoO
             return value;
         }
 
-        public static void UpdateAtomCounts(Dictionary<char, int> sourceAtoms, char c, int value)
+        public static Dictionary<char, int> UpdateAtomCounts(Dictionary<char, int> atoms, char c, int value)
         {
-            if (sourceAtoms.ContainsKey(c))
+            if (atoms.ContainsKey(c))
             {
-                sourceAtoms[c] += value;
+                atoms[c] += value;
             }
             else
             {
-                sourceAtoms.Add(c, value);
+                atoms.Add(c, value);
             }
+            return atoms;
         }
 
-        public static Dictionary<char, int> MultiplySourceMolecule(Dictionary<char, int> sourceAtoms, string[] inputStrings)
+        public static Dictionary<char, int> MultiplySourceMolecule(Dictionary<char, int> atoms, string[] inputStrings)
         {
             if (inputStrings.Length == 2)
             {
                 var countMultiplier = int.Parse(inputStrings[1]);
-                var keys = new char[sourceAtoms.Keys.Count];
-                sourceAtoms.Keys.CopyTo(keys, 0);
+                var keys = new char[atoms.Keys.Count];
+                atoms.Keys.CopyTo(keys, 0);
                 for(var i = 0; i < keys.Length; i++)
                 {
                     var key = keys[i];
-                    sourceAtoms[key] *= countMultiplier;
+                    atoms[key] *= countMultiplier;
                 }
             }
-            return sourceAtoms;
+            return atoms;
         }
     }
 }
